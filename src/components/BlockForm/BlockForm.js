@@ -4,7 +4,7 @@ import TextInput from "components/TextInput";
 import * as C from "constant";
 import * as S from "./style";
 
-const BlockForm = () => {
+const BlockForm = ({ previousHash }) => {
   const { form, handleChange, handleNumberFieldChange } = useForm();
   const { hash } = useHash(`${form.block?.value}${form.nonce?.value}${form.data?.value}`);
 
@@ -33,8 +33,16 @@ const BlockForm = () => {
         rows={12}
         {...form.data}
       />
+      {previousHash && (
+        <TextInput
+          variant={C.VARIANT.outlined}
+          onChange={handleChange}
+          label={"Previous"}
+          disabled
+          value={previousHash}
+        />
+      )}
       <TextInput
-        fieldName="hash"
         variant={C.VARIANT.outlined}
         onChange={handleChange}
         label={"Hash"}
