@@ -79,6 +79,7 @@ const BlockForm = ({
 
   const handleBlockChange = (e) => {
     const value = e.value;
+    if (isNaN(value)) return;
     setHash(
       calculateHash(`${value}${form.nonce?.value}${form.data?.value}${previousHash}`)
     );
