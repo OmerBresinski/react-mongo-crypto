@@ -58,7 +58,7 @@ const TABS = [
   "Tokens",
   "Coinbase",
   "Keys",
-  "Signature",
+  "Signatures",
   "Transaction",
 ];
 
