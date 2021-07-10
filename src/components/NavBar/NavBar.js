@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router";
+import React, { useState, useEffect } from "react";
+import { useHistory, useRouteMatch } from "react-router";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -8,11 +8,26 @@ import * as C from "constant";
 const NavBar = () => {
   const history = useHistory();
   const [value, setValue] = useState(0);
+  const match = useRouteMatch("/:page");
+
+  useEffect(() => {
+    navigateToInitialTab();
+  }, [match]);
 
   const handleChange = (_e, newValue) => {
     const page = _e.target?.textContent?.toLowerCase();
-    setValue(newValue);
     history.push(C.ROUTES[page]);
+    setValue(newValue);
+  };
+
+  const navigateToInitialTab = () => {
+    if (match) {
+      const page = match.params.page;
+      const pageIndex = TABS.findIndex(
+        (tab) => tab?.toLowerCase() === page?.toLowerCase()
+      );
+      setValue(pageIndex || 0);
+    }
   };
 
   return (
@@ -24,16 +39,14 @@ const NavBar = () => {
         indicatorColor="primary"
         textColor="primary"
       >
-        <Tab label="Home" index={0} />
-        <Tab label="Hash" index={1} />
-        <Tab label="Block" index={2} />
-        <Tab label="Blockchain" index={3} />
-        <Tab label="Distributed" index={4} />
-        <Tab label="Tokens" index={5} />
-        <Tab label="Coinbase" index={6} />
+        {TABS.map((tab, index) => {
+          return <Tab key={index} label={tab} index={index} />;
+        })}
       </Tabs>
     </AppBar>
   );
 };
+
+const TABS = ["Home", "Hash", "Block", "Blockchain", "Distributed", "Tokens", "Coinbase"];
 
 export default NavBar;
