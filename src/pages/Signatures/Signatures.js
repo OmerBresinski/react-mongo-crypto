@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Text from "components/Text";
+import Tabs from "components/Tabs";
 import TextInput from "components/TextInput";
 import Button from "components/Button";
 import * as C from "constant";
@@ -14,6 +15,7 @@ const Signatures = () => {
             Signatures
           </Text>
         </S.Header>
+        <Tabs items={["Sign", "Verify"]} />
       </S.Content>
     </S.Signatures>
   );
