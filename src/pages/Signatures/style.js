@@ -20,3 +20,22 @@ export const Content = styled.div`
 export const Header = styled.div`
   display: flex;
 `;
+
+export const SignatureContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-block-start: 25px;
+  width: 600px;
+`;
+
+export const Navigation = styled.div`
+  display: flex;
+  justify-content: flex-start;
+`;
+
+export const Data = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-block-start: 20px;
+  gap: 10px;
+`;

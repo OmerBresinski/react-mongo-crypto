@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { Tabs as MuiTabs } from "@material-ui/core";
 import { Tab as MuiTab } from "@material-ui/core";
 import * as S from "./style";
 
-const Tabs = ({ items }) => {
-  const [value, setValue] = useState(0);
-
+const Tabs = ({ items, onChange, activeTab }) => {
   const handleChange = (_e, newValue) => {
-    setValue(newValue);
+    onChange(newValue);
   };
 
   return (
     <MuiTabs
-      value={value}
+      value={activeTab}
       onChange={handleChange}
       aria-label="Navigation"
       indicatorColor="primary"
