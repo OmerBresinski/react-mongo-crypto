@@ -27,6 +27,14 @@ export const useForm = (submit) => {
     }
   };
 
+  const editEntry = (fieldName, value) => {
+    setForm((form) => {
+      const tmpForm = { ...form };
+      tmpForm[fieldName] = { isValid: true, value };
+      return tmpForm;
+    });
+  };
+
   const applyDirtyForm = () => {
     setForm((currentForm) => {
       const dirtyForm = {};
@@ -47,5 +55,5 @@ export const useForm = (submit) => {
     return tmpIsValid;
   };
 
-  return { form, handleChange, handleNumberFieldChange, handleSubmit };
+  return { form, handleChange, handleNumberFieldChange, handleSubmit, editEntry };
 };

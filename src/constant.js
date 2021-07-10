@@ -25,3 +25,8 @@ export const ROUTES = {
   block: "/block",
   blockchain: "/blockchain",
 };
+
+export const CRYPTO = {
+  difficulty: 4,
+  maxNonce: 500000,
+};

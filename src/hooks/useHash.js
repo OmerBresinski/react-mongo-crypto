@@ -8,5 +8,9 @@ export const useHash = (data) => {
     setHash(sha256(data).toString());
   }, [data]);
 
-  return { hash };
+  const calculateHash = (data) => {
+    return sha256(data).toString();
+  };
+
+  return { hash, calculateHash, setHash };
 };
