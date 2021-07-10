@@ -22,4 +22,5 @@ export const COLORS = {
 export const ROUTES = {
   home: "/",
   hash: "/hash",
+  block: "/block",
 };

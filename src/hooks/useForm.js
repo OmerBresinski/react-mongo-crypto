@@ -12,6 +12,14 @@ export const useForm = (submit) => {
     });
   }, []);
 
+  const handleNumberFieldChange = useCallback(({ fieldName, value, isValid }) => {
+    if (isNaN(value)) {
+      return;
+    } else {
+      handleChange({ fieldName, value, isValid });
+    }
+  }, []);
+
   const handleSubmit = () => {
     applyDirtyForm();
     if (isValidForm()) {
@@ -39,5 +47,5 @@ export const useForm = (submit) => {
     return tmpIsValid;
   };
 
-  return { form, handleChange, handleSubmit };
+  return { form, handleChange, handleNumberFieldChange, handleSubmit };
 };
