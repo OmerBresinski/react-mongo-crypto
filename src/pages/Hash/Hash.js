@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, useHash } from "hooks";
 import Text from "components/Text";
 import TextInput from "components/TextInput";
@@ -7,7 +7,13 @@ import * as S from "./style";
 
 const Hash = () => {
   const { form, handleChange } = useForm();
-  const { hash } = useHash(form.data?.value);
+  const { hash, setHash, calculateHash } = useHash(form.data?.value);
+
+  useEffect(() => {
+    if (form.data?.value) {
+      setHash(calculateHash(form.data?.value));
+    }
+  }, [form.data?.value]);
 
   return (
     <S.Hash>
