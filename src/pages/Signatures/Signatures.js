@@ -1,25 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Text from "components/Text";
 import Tabs from "components/Tabs";
-import TextInput from "components/TextInput";
-import Button from "components/Button";
-import * as C from "constant";
+import SignMessage from "./SignMessage";
+import VerifyMessage from "./VerifyMessage";
 import * as S from "./style";
 
 const Signatures = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [message, setMessage] = useState("");
   const [privateKey, setPrivateKey] = useState("");
+  const [publicKey, setPublicKey] = useState("");
   const [messageSignature, setMessageSignature] = useState("");
+  const [visibleSection, setVisibleSection] = useState(SECTIONS.sign);
+
+  useEffect(() => {
+    activeTab === 1
+      ? setVisibleSection(SECTIONS.verify)
+      : setVisibleSection(SECTIONS.sign);
+  }, [activeTab]);
 
   const sign = () => {};
+
+  const verify = () => {};
 
   const handleMessageChange = () => {};
 
   const handlePrivateKeyChange = () => {};
 
+  const handlePublicKeyChange = () => {};
+
   const handleTabChange = (newValue) => {
-    console.log(newValue);
     setActiveTab(newValue);
   };
 
@@ -39,37 +49,35 @@ const Signatures = () => {
               onChange={handleTabChange}
             />
           </S.Navigation>
-          <S.Data>
-            <TextInput
-              fieldName="message"
-              variant={C.VARIANT.outlined}
-              onChange={handleMessageChange}
-              label={"Message"}
-              multiline
-              rows={12}
-              value={message}
+          {visibleSection === SECTIONS.sign ? (
+            <SignMessage
+              message={message}
+              privateKey={privateKey}
+              messageSignature={messageSignature}
+              onMessageChange={handleMessageChange}
+              onPrivateKeyChange={handlePrivateKeyChange}
+              onSignClick={sign}
             />
-            <TextInput
-              fieldName="privateKey"
-              variant={C.VARIANT.outlined}
-              onChange={handlePrivateKeyChange}
-              label={"Private Key"}
-              value={privateKey}
+          ) : (
+            <VerifyMessage
+              message={message}
+              publicKey={publicKey}
+              messageSignature={messageSignature}
+              onMessageChange={handleMessageChange}
+              onPublicKeyChange={handlePublicKeyChange}
+              onSignClick={sign}
+              onVerifyClick={verify}
             />
-            <Button label="Sign" onClick={sign} color={"primary"} variant="outlined" />
-            <TextInput
-              fieldName="messageSignature"
-              variant={C.VARIANT.outlined}
-              onChange={() => {}}
-              label={"Message Signature"}
-              value={messageSignature}
-              disabled
-            />
-          </S.Data>
+          )}
         </S.SignatureContent>
       </S.Content>
     </S.Signatures>
   );
+};
+
+const SECTIONS = {
+  sign: "sign",
+  verify: "verify",
 };
 
 export default Signatures;

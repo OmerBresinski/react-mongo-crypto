@@ -33,7 +33,14 @@ export const Navigation = styled.div`
   justify-content: flex-start;
 `;
 
-export const Data = styled.div`
+export const SignMessage = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-block-start: 20px;
+  gap: 10px;
+`;
+
+export const VerifyMessage = styled.div`
   display: flex;
   flex-direction: column;
   margin-block-start: 20px;
