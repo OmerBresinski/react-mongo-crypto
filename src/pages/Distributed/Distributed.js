@@ -3,7 +3,7 @@ import Text from "components/Text";
 import BlockForm from "components/BlockForm";
 import * as S from "./style";
 
-const Blockchain = () => {
+const Distributed = () => {
   const [isDirty, setIsDirty] = useState(false);
   const [blocks, setBlocks] = useState(initialBlocks);
 
@@ -17,15 +17,17 @@ const Blockchain = () => {
     }
   }, []);
 
+  console.log("distributed");
+
   return (
-    <S.Blockchain>
+    <S.Distributed>
       <S.Content>
         <S.Header>
           <Text size="64px" bold>
-            Blockchain
+            Distributed
           </Text>
         </S.Header>
-        <S.Blocks>
+        {/* <S.Blocks>
           {blocks.map(({ previousHash }, index) => {
             return (
               <BlockForm
@@ -39,9 +41,9 @@ const Blockchain = () => {
               />
             );
           })}
-        </S.Blocks>
+        </S.Blocks> */}
       </S.Content>
-    </S.Blockchain>
+    </S.Distributed>
   );
 };
 
@@ -53,4 +55,4 @@ const initialBlocks = [
   { previousHash: " " },
 ];
 
-export default Blockchain;
+export default Distributed;

@@ -24,6 +24,7 @@ export const ROUTES = {
   hash: "/hash",
   block: "/block",
   blockchain: "/blockchain",
+  distributed: "/distributed",
 };
 
 export const CRYPTO = {
