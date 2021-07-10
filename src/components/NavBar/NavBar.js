@@ -20,7 +20,12 @@ const NavBar = () => {
         textColor="primary"
       >
         <Tab label="Home" index={0} />
-        <Tab label="Favorites" index={1} />
+        <Tab label="Hash" index={1} />
+        <Tab label="Block" index={2} />
+        <Tab label="Blockchain" index={3} />
+        <Tab label="Distributed" index={4} />
+        <Tab label="Tokens" index={5} />
+        <Tab label="Coinbase" index={6} />
       </Tabs>
     </AppBar>
   );
