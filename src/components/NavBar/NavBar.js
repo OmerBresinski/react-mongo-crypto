@@ -38,6 +38,8 @@ const NavBar = () => {
         aria-label="Navigation"
         indicatorColor="primary"
         textColor="primary"
+        variant="scrollable"
+        scrollButtons="auto"
       >
         {TABS.map((tab, index) => {
           return <Tab key={index} label={tab} index={index} />;
@@ -47,6 +49,17 @@ const NavBar = () => {
   );
 };
 
-const TABS = ["Home", "Hash", "Block", "Blockchain", "Distributed", "Tokens", "Coinbase"];
+const TABS = [
+  "Home",
+  "Hash",
+  "Block",
+  "Blockchain",
+  "Distributed",
+  "Tokens",
+  "Coinbase",
+  "Keys",
+  "Signature",
+  "Transaction",
+];
 
 export default NavBar;
