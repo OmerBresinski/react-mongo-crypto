@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm, useHash } from "hooks";
 import Text from "components/Text";
 import TextInput from "components/TextInput";
