@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Home = styled.div`
+export const Hash = styled.div`
   display: flex;
   height: 100vh;
   align-items: center;
@@ -19,4 +19,13 @@ export const Content = styled.div`
 
 export const Header = styled.div`
   display: flex;
+`;
+
+export const Form = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-block-start: 20px;
+  gap: 25px;
+  max-width: 500px;
+  width: 100%;
 `;

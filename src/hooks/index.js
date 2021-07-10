@@ -1,2 +1,2 @@
 export { useForm } from "./useForm";
-export { usePeopleFetch } from "./usePeopleFetch";
+export { useHash } from "./useHash";
