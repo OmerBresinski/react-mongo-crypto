@@ -26,6 +26,6 @@ export const Form = styled.div`
   flex-direction: column;
   margin-block-start: 20px;
   gap: 25px;
-  max-width: 500px;
+  max-width: 650px;
   width: 100%;
 `;

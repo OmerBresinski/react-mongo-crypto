@@ -33,7 +33,7 @@ const Hash = () => {
             onChange={handleChange}
             label={"Hash"}
             disabled
-            {...form.hash}
+            value={hash}
           />
         </S.Form>
       </S.Content>

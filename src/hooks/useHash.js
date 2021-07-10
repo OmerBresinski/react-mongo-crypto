@@ -1,6 +1,12 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import sha256 from "crypto-js/sha256";
 
 export const useHash = (data) => {
-  console.log(data);
-  return {};
+  const [hash, setHash] = useState("");
+
+  useEffect(() => {
+    setHash(sha256(data));
+  }, [data]);
+
+  return { hash };
 };
