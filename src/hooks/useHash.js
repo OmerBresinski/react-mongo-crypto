@@ -6,7 +6,7 @@ export const useHash = (data) => {
 
   useEffect(() => {
     setHash(sha256(data).toString());
-  }, [data]);
+  }, []);
 
   const calculateHash = (data) => {
     return sha256(data).toString();

@@ -5,16 +5,34 @@ import * as C from "constant";
 import * as S from "./style";
 import Button from "components/Button";
 
-const BlockForm = ({ previousHash, width = "650px", onHash, index = 0 }) => {
+const BlockForm = ({
+  previousHash,
+  width = "650px",
+  onHash,
+  index = 0,
+  isDirty,
+  setIsDirty,
+}) => {
   const [isValidHash, setIsValidHash] = useState(false);
-  const [isDirty, setIsDirty] = useState(false);
   const { form, handleChange, handleNumberFieldChange, editEntry } = useForm();
-  const { hash, calculateHash, setHash } = useHash();
+  const { hash, calculateHash, setHash } = useHash(
+    `${form.block?.value}${form.nonce?.value}${form.data?.value}${previousHash}`
+  );
 
   useEffect(() => {
     onHash && onHash(hash.toString(), index);
     validateHash();
   }, [hash]);
+
+  useEffect(() => {
+    if (previousHash) {
+      setHash(
+        calculateHash(
+          `${form.block?.value}${form.nonce?.value}${form.data?.value}${previousHash}`
+        )
+      );
+    }
+  }, [previousHash]);
 
   const validateHash = () => {
     if (
@@ -41,7 +59,9 @@ const BlockForm = ({ previousHash, width = "650px", onHash, index = 0 }) => {
     ) {
       nonce++;
       hashString = calculateHash(
-        `${form.block?.value || index + 1}${previousHash}${form.data.value}${nonce}`
+        `${form.block?.value || index + 1}${previousHash}${
+          form.data.value
+        }${nonce}${previousHash}`
       );
     }
     setIsDirty(true);
@@ -51,19 +71,25 @@ const BlockForm = ({ previousHash, width = "650px", onHash, index = 0 }) => {
 
   const handleNonceChange = (e) => {
     const value = e.value;
-    setHash(calculateHash(`${form.block?.value}${value}${form.data?.value}`));
+    setHash(
+      calculateHash(`${form.block?.value}${value}${form.data?.value}${previousHash}`)
+    );
     handleChange(e);
   };
 
   const handleBlockChange = (e) => {
     const value = e.value;
-    setHash(calculateHash(`${value}${form.nonce?.value}${form.data?.value}`));
+    setHash(
+      calculateHash(`${value}${form.nonce?.value}${form.data?.value}${previousHash}`)
+    );
     handleNumberFieldChange(e);
   };
 
   const handleDataChange = (e) => {
     const value = e.value;
-    setHash(calculateHash(`${form.block?.value}${form.nonce?.value}${value}`));
+    setHash(
+      calculateHash(`${form.block?.value}${form.nonce?.value}${value}${previousHash}`)
+    );
     handleChange(e);
   };
 
@@ -118,7 +144,7 @@ const BlockForm = ({ previousHash, width = "650px", onHash, index = 0 }) => {
         isValid={isValidHash}
         isDirty={isDirty}
       />
-      <Button label="Mine" onClick={mine} color={"primary"} variant="outlined" />
+      <Button label="Mine" onClick={mine} color={"primary"} variant="text" />
     </S.BlockForm>
   );
 };

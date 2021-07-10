@@ -4,6 +4,7 @@ import BlockForm from "components/BlockForm";
 import * as S from "./style";
 
 const Block = () => {
+  const [isDirty, setIsDirty] = useState(false);
   const [blocks, setBlocks] = useState(initialBlocks);
 
   const handleHashChange = useCallback((hash, index) => {
@@ -33,6 +34,8 @@ const Block = () => {
                 onHash={handleHashChange}
                 index={index}
                 width="325px"
+                isDirty={isDirty}
+                setIsDirty={setIsDirty}
               />
             );
           })}
