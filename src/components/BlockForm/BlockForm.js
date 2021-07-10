@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useForm, useHash } from "hooks";
 import TextInput from "components/TextInput";
+import Button from "components/Button";
 import * as C from "constant";
 import * as S from "./style";
-import Button from "components/Button";
 
 const BlockForm = ({
   previousHash,

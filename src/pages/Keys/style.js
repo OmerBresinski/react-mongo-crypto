@@ -20,3 +20,18 @@ export const Content = styled.div`
 export const Header = styled.div`
   display: flex;
 `;
+
+export const KeyPair = styled.div`
+  display: flex;
+  margin-block-start: 50px;
+  flex-direction: column;
+  gap: 15px;
+  width: 600px;
+`;
+
+export const PrivateKey = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+export const PublicKey = styled.div``;
