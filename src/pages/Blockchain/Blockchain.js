@@ -1,22 +1,9 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import Text from "components/Text";
-import BlockForm from "components/BlockForm";
+import BlockchainForm from "components/BlockchainForm";
 import * as S from "./style";
 
 const Blockchain = () => {
-  const [isDirty, setIsDirty] = useState(false);
-  const [blocks, setBlocks] = useState(initialBlocks);
-
-  const handleHashChange = useCallback((hash, index) => {
-    if (index != blocks.length - 1) {
-      setBlocks((blocks) => {
-        const tmpBlocks = [...blocks];
-        tmpBlocks[index + 1] = { previousHash: hash };
-        return tmpBlocks;
-      });
-    }
-  }, []);
-
   return (
     <S.Blockchain>
       <S.Content>
@@ -25,32 +12,10 @@ const Blockchain = () => {
             Blockchain
           </Text>
         </S.Header>
-        <S.Blocks>
-          {blocks.map(({ previousHash }, index) => {
-            return (
-              <BlockForm
-                key={index}
-                previousHash={previousHash}
-                onHash={handleHashChange}
-                index={index}
-                width="325px"
-                isDirty={isDirty}
-                setIsDirty={setIsDirty}
-              />
-            );
-          })}
-        </S.Blocks>
+        <BlockchainForm dataRows={12} />
       </S.Content>
     </S.Blockchain>
   );
 };
-
-const initialBlocks = [
-  { previousHash: "0000000000000000000000000000000000000000000000000000000000000000" },
-  { previousHash: " " },
-  { previousHash: " " },
-  { previousHash: " " },
-  { previousHash: " " },
-];
 
 export default Blockchain;

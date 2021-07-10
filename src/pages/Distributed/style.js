@@ -30,3 +30,9 @@ export const Blocks = styled.div`
   overflow-x: auto;
   box-sizing: border-box;
 `;
+
+export const Blockchains = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;

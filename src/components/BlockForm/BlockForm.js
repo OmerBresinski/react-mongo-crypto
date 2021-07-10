@@ -8,6 +8,7 @@ import Button from "components/Button";
 const BlockForm = ({
   previousHash,
   width = "650px",
+  dataRows = 12,
   onHash,
   index = 0,
   isDirty,
@@ -120,7 +121,7 @@ const BlockForm = ({
         onChange={handleDataChange}
         label={"Data"}
         multiline
-        rows={12}
+        rows={dataRows}
         {...form.data}
         isValid={isValidHash}
         isDirty={isDirty}
