@@ -146,7 +146,7 @@ const BlockForm = ({
         isValid={isValidHash}
         isDirty={isDirty}
       />
-      <Button label="Mine" onClick={mine} color={"primary"} variant="text" />
+      <Button label="Mine" onClick={mine} color={"primary"} variant="outlined" />
     </S.BlockForm>
   );
 };

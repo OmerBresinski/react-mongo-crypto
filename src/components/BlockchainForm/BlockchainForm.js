@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import BlockForm from "components/BlockForm";
 import * as S from "./style";
 
-const BlockchainForm = () => {
+const BlockchainForm = ({ dataRows }) => {
   const [isDirty, setIsDirty] = useState(false);
   const [blocks, setBlocks] = useState(initialBlocks);
 
@@ -26,7 +26,7 @@ const BlockchainForm = () => {
             onHash={handleHashChange}
             index={index}
             width="325px"
-            dataRows={5}
+            dataRows={dataRows}
             isDirty={isDirty}
             setIsDirty={setIsDirty}
           />

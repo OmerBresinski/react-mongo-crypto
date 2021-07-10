@@ -13,9 +13,9 @@ const Distributed = () => {
           </Text>
         </S.Header>
         <S.Blockchains>
-          <BlockchainForm dataRows={12} />
-          <BlockchainForm dataRows={12} />
-          <BlockchainForm dataRows={12} />
+          <BlockchainForm dataRows={5} />
+          <BlockchainForm dataRows={5} />
+          <BlockchainForm dataRows={5} />
         </S.Blockchains>
       </S.Content>
     </S.Distributed>
