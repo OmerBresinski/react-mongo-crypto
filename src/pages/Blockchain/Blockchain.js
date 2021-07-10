@@ -3,19 +3,19 @@ import Text from "components/Text";
 import BlockForm from "components/BlockForm";
 import * as S from "./style";
 
-const BlockChain = () => {
+const Block = () => {
   return (
-    <S.Block>
+    <S.Blockchain>
       <S.Content>
         <S.Header>
           <Text size="64px" bold>
-            Block
+            Blockchain
           </Text>
         </S.Header>
         <BlockForm />
       </S.Content>
-    </S.Block>
+    </S.Blockchain>
   );
 };
 
-export default BlockChain;
+export default Block;

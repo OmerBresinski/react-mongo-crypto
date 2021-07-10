@@ -23,4 +23,5 @@ export const ROUTES = {
   home: "/",
   hash: "/hash",
   block: "/block",
+  blockchain: "/blockchain",
 };
