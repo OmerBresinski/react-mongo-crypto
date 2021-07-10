@@ -1,21 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, useHash } from "hooks";
 import TextInput from "components/TextInput";
 import * as C from "constant";
 import * as S from "./style";
 
-const BlockForm = ({ previousHash }) => {
+const BlockForm = ({ previousHash, width = "650px", onHash, index = 0 }) => {
   const { form, handleChange, handleNumberFieldChange } = useForm();
   const { hash } = useHash(`${form.block?.value}${form.nonce?.value}${form.data?.value}`);
 
+  useEffect(() => {
+    onHash && onHash(hash.toString(), index);
+  }, [hash]);
+
+  console.log(form);
+
   return (
-    <S.BlockForm>
+    <S.BlockForm width={width}>
       <TextInput
         fieldName="block"
         variant={C.VARIANT.outlined}
         onChange={handleNumberFieldChange}
         label={"Block"}
-        {...form.block}
+        isDirty={form.block?.isDirty}
+        value={form.block?.value || index + 1}
+        isValid={form.block?.isValid}
       />
       <TextInput
         fieldName="nonce"

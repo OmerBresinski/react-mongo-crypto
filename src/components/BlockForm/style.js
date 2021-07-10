@@ -5,6 +5,7 @@ export const BlockForm = styled.div`
   flex-direction: column;
   margin-block-start: 20px;
   gap: 25px;
-  max-width: 650px;
+  max-width: ${({ width }) => width};
+  min-width: 250px;
   width: 100%;
 `;
