@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import { KeysContextProvider } from "contexts/KeysContextProvider";
 import { Home, Hash, Block, Blockchain, Distributed, Keys, Signatures } from "pages";
 import { ThemeProvider } from "theme";
