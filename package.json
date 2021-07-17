@@ -3,7 +3,7 @@
   "version": "1.0.7",
   "bin": "./bin/cli.js",
   "license": "MIT",
-  "homepage": "http://OmerBresinski.github.io/react-mongo-crypto",
+  "homepage": "http://omerbresinski.github.io/react-mongo-crypto",
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
