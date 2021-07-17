@@ -23,9 +23,20 @@ export const KeysContextProvider = ({ children }) => {
     }
   };
 
+  const handlePublicKeyChange = ({ value }) => {
+    setPublicKey(value);
+  };
+
   return (
     <KeysContext.Provider
-      value={{ privateKey, publicKey, handleRandomClick, handlePrivateKeyChange }}
+      value={{
+        ec: ec.current,
+        privateKey,
+        publicKey,
+        handleRandomClick,
+        handlePrivateKeyChange,
+        handlePublicKeyChange,
+      }}
     >
       {children}
     </KeysContext.Provider>

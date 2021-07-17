@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { SHA256, enc } from "crypto-js";
 import Text from "components/Text";
 import Tabs from "components/Tabs";
 import SignMessage from "./SignMessage";
@@ -9,9 +10,11 @@ import * as S from "./style";
 const Signatures = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [message, setMessage] = useState("");
-  const { privateKey, publicKey } = useContext(KeysContext);
-  const [messageSignature, setMessageSignature] = useState("");
+  const { privateKey, publicKey, handlePrivateKeyChange, handlePublicKeyChange, ec } =
+    useContext(KeysContext);
+  const [signature, setSignature] = useState("");
   const [visibleSection, setVisibleSection] = useState(SECTIONS.sign);
+  const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
     activeTab === 1
@@ -19,15 +22,26 @@ const Signatures = () => {
       : setVisibleSection(SECTIONS.sign);
   }, [activeTab]);
 
-  const sign = () => {};
+  const sign = () => {
+    if (privateKey) {
+      const binaryMessage = Buffer.from(SHA256(message).toString()).toString("hex");
+      setSignature(
+        Buffer.from(
+          ec.sign(binaryMessage, ec.keyFromPrivate(privateKey)).toDER()
+        ).toString("hex")
+      );
+    }
+  };
 
-  const verify = () => {};
+  const verify = () => {
+    const key = ec.keyFromPublic(publicKey, "hex");
+    const binaryMessage = Buffer.from(SHA256(message).toString()).toString("hex");
+    setIsVerified(key.verify(binaryMessage, signature));
+  };
 
-  const handleMessageChange = () => {};
-
-  const handlePrivateKeyChange = () => {};
-
-  const handlePublicKeyChange = () => {};
+  const handleMessageChange = ({ value }) => {
+    setMessage(value);
+  };
 
   const handleTabChange = (newValue) => {
     setActiveTab(newValue);
@@ -53,7 +67,7 @@ const Signatures = () => {
             <SignMessage
               message={message}
               privateKey={privateKey}
-              messageSignature={messageSignature}
+              messageSignature={signature}
               onMessageChange={handleMessageChange}
               onPrivateKeyChange={handlePrivateKeyChange}
               onSignClick={sign}
@@ -62,11 +76,12 @@ const Signatures = () => {
             <VerifyMessage
               message={message}
               publicKey={publicKey}
-              messageSignature={messageSignature}
+              messageSignature={signature}
               onMessageChange={handleMessageChange}
               onPublicKeyChange={handlePublicKeyChange}
               onSignClick={sign}
               onVerifyClick={verify}
+              isVerified={isVerified}
             />
           )}
         </S.SignatureContent>
