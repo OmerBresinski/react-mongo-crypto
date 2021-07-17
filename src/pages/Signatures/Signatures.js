@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Text from "components/Text";
 import Tabs from "components/Tabs";
 import SignMessage from "./SignMessage";
 import VerifyMessage from "./VerifyMessage";
+import { KeysContext } from "contexts/KeysContextProvider";
 import * as S from "./style";
 
 const Signatures = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [message, setMessage] = useState("");
-  const [privateKey, setPrivateKey] = useState("");
-  const [publicKey, setPublicKey] = useState("");
+  const { privateKey, publicKey } = useContext(KeysContext);
   const [messageSignature, setMessageSignature] = useState("");
   const [visibleSection, setVisibleSection] = useState(SECTIONS.sign);
 

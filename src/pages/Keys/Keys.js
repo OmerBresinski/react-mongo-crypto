@@ -1,32 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useContext } from "react";
 import Text from "components/Text";
 import TextInput from "components/TextInput";
 import Button from "components/Button";
-import EC from "elliptic";
+import { KeysContext } from "contexts/KeysContextProvider";
 import * as C from "constant";
 import * as S from "./style";
 
 const Keys = () => {
-  const ec = useRef(new EC.ec("secp256k1"));
-  const [privateKey, setPrivateKey] = useState("");
-  const [publicKey, setPublicKey] = useState("");
-
-  const handleRandomClick = () => {
-    const key = ec.current.genKeyPair();
-    setPrivateKey(key.getPrivate("hex"));
-    setPublicKey(key.getPublic("hex"));
-  };
-
-  const handlePrivateKeyChange = ({ value }) => {
-    if (value) {
-      const publicKey = ec.current.keyFromPrivate(value)?.getPublic("hex");
-      setPrivateKey(value);
-      setPublicKey(publicKey);
-    } else {
-      setPrivateKey("");
-      setPublicKey("");
-    }
-  };
+  const { privateKey, publicKey, handleRandomClick, handlePrivateKeyChange } =
+    useContext(KeysContext);
 
   return (
     <S.Keys>
