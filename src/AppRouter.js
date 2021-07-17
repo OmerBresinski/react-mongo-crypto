@@ -19,7 +19,7 @@ const AppRouter = () => {
             <Route exact path={C.ROUTES.distributed} component={Distributed} />
             <Route exact path={C.ROUTES.keys} component={Keys} />
             <Route exact path={C.ROUTES.signatures} component={Signatures} />
-            <Route exact path={C.ROUTES.blockChain} component={Blockchain} />
+            <Route exact path={C.ROUTES.blockchain} component={Blockchain} />
           </KeysContextProvider>
         </Switch>
       </Router>
