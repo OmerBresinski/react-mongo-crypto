@@ -34,9 +34,11 @@ const Signatures = () => {
   };
 
   const verify = () => {
-    const key = ec.keyFromPublic(publicKey, "hex");
-    const binaryMessage = Buffer.from(SHA256(message).toString()).toString("hex");
-    setIsVerified(key.verify(binaryMessage, signature));
+    if (publicKey) {
+      const key = ec.keyFromPublic(publicKey, "hex");
+      const binaryMessage = Buffer.from(SHA256(message).toString()).toString("hex");
+      setIsVerified(key.verify(binaryMessage, signature));
+    }
   };
 
   const handleMessageChange = ({ value }) => {
