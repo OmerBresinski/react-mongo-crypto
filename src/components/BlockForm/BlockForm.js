@@ -13,11 +13,15 @@ const BlockForm = ({
   index = 0,
   isDirty,
   setIsDirty,
+  transactions,
 }) => {
   const [isValidHash, setIsValidHash] = useState(false);
+  const [transactionParams, setTransactionParams] = useState({});
   const { form, handleChange, handleNumberFieldChange, editEntry } = useForm();
   const { hash, calculateHash, setHash } = useHash(
-    `${form.block?.value}${form.nonce?.value}${form.data?.value}${previousHash}`
+    `${form.block?.value}${form.nonce?.value}${
+      form.data?.value
+    }${previousHash}${JSON.stringify(transactionParams)}`
   );
 
   useEffect(() => {
@@ -29,7 +33,9 @@ const BlockForm = ({
     if (previousHash) {
       setHash(
         calculateHash(
-          `${form.block?.value}${form.nonce?.value}${form.data?.value}${previousHash}`
+          `${form.block?.value}${form.nonce?.value}${
+            form.data?.value
+          }${previousHash}${JSON.stringify(transactionParams)}`
         )
       );
     }
@@ -61,8 +67,8 @@ const BlockForm = ({
       nonce++;
       hashString = calculateHash(
         `${form.block?.value || index + 1}${previousHash}${
-          form.data.value
-        }${nonce}${previousHash}`
+          form.data?.value
+        }${nonce}${previousHash}${JSON.stringify(transactionParams)}`
       );
     }
     setIsDirty(true);
@@ -73,7 +79,11 @@ const BlockForm = ({
   const handleNonceChange = (e) => {
     const value = e.value;
     setHash(
-      calculateHash(`${form.block?.value}${value}${form.data?.value}${previousHash}`)
+      calculateHash(
+        `${form.block?.value}${value}${form.data?.value}${previousHash}${JSON.stringify(
+          transactionParams
+        )}`
+      )
     );
     handleChange(e);
   };
@@ -82,7 +92,11 @@ const BlockForm = ({
     const value = e.value;
     if (isNaN(value)) return;
     setHash(
-      calculateHash(`${value}${form.nonce?.value}${form.data?.value}${previousHash}`)
+      calculateHash(
+        `${value}${form.nonce?.value}${form.data?.value}${previousHash}${JSON.stringify(
+          transactionParams
+        )}`
+      )
     );
     handleNumberFieldChange(e);
   };
@@ -90,9 +104,49 @@ const BlockForm = ({
   const handleDataChange = (e) => {
     const value = e.value;
     setHash(
-      calculateHash(`${form.block?.value}${form.nonce?.value}${value}${previousHash}`)
+      calculateHash(
+        `${form.block?.value}${form.nonce?.value}${value}${previousHash}${JSON.stringify(
+          transactionParams
+        )}`
+      )
     );
     handleChange(e);
+  };
+
+  const handleTransactionChange = (e) => {
+    setTransactionParams((params) => {
+      return { ...params, [e.fieldName]: e.value };
+    });
+    setHash(
+      calculateHash(
+        `${form.block?.value}${form.nonce?.value}${
+          form.data?.value
+        }${previousHash}${JSON.stringify({
+          ...transactionParams,
+          [e.fieldName]: e.value,
+        })}`
+      )
+    );
+    handleChange(e);
+  };
+
+  const handleTransactionAmountChange = (e) => {
+    if (!isNaN(e.value)) {
+      setTransactionParams((params) => {
+        return { ...params, [e.fieldName]: e.value };
+      });
+      setHash(
+        calculateHash(
+          `${form.block?.value}${form.nonce?.value}${
+            form.data?.value
+          }${previousHash}${JSON.stringify({
+            ...transactionParams,
+            [e.fieldName]: e.value,
+          })}`
+        )
+      );
+      handleNumberFieldChange(e);
+    }
   };
 
   return (
@@ -115,17 +169,53 @@ const BlockForm = ({
         isValid={isValidHash}
         isDirty={isDirty}
       />
-      <TextInput
-        fieldName="data"
-        variant={C.VARIANT.outlined}
-        onChange={handleDataChange}
-        label={"Data"}
-        multiline
-        rows={dataRows}
-        {...form.data}
-        isValid={isValidHash}
-        isDirty={isDirty}
-      />
+      {transactions?.length ? (
+        transactions.map(({ amount, from, to }, index) => {
+          return (
+            <div key={index} style={{ display: "flex", gap: "8px" }}>
+              <TextInput
+                fieldName={`amount_${index}`}
+                variant={C.VARIANT.outlined}
+                onChange={handleTransactionAmountChange}
+                label={"$"}
+                value={form[`amount_${index}`]?.value ?? amount}
+                isValid={isValidHash}
+                isDirty={isDirty}
+              />
+              <TextInput
+                fieldName={`from_${index}`}
+                variant={C.VARIANT.outlined}
+                onChange={handleTransactionChange}
+                label={"From"}
+                value={form[`from_${index}`]?.value ?? from}
+                isValid={isValidHash}
+                isDirty={isDirty}
+              />
+              <TextInput
+                fieldName={`to_${index}`}
+                variant={C.VARIANT.outlined}
+                onChange={handleTransactionChange}
+                label={"To"}
+                value={form[`to_${index}`]?.value ?? to}
+                isValid={isValidHash}
+                isDirty={isDirty}
+              />
+            </div>
+          );
+        })
+      ) : (
+        <TextInput
+          fieldName="data"
+          variant={C.VARIANT.outlined}
+          onChange={handleDataChange}
+          label={"Data"}
+          multiline
+          rows={dataRows}
+          {...form.data}
+          isValid={isValidHash}
+          isDirty={isDirty}
+        />
+      )}
       {previousHash && (
         <TextInput
           variant={C.VARIANT.outlined}

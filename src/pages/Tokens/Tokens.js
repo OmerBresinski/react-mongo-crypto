@@ -4,6 +4,18 @@ import BlockchainForm from "components/BlockchainForm";
 import * as S from "./style";
 
 const Tokens = () => {
+  const transactions = [
+    [
+      { amount: 10, from: "Omer", to: "Guy" },
+      { amount: 20, from: "James", to: "Abraham" },
+      { amount: 30, from: "Rick", to: "Morty" },
+    ],
+    [
+      { amount: 40, from: "Snow White", to: "Prince" },
+      { amount: 50, from: "Brenner", to: "Max" },
+    ],
+  ];
+
   return (
     <S.Tokens>
       <S.Content>
@@ -13,9 +25,9 @@ const Tokens = () => {
           </Text>
         </S.Header>
         <S.Blockchains>
-          <BlockchainForm dataRows={5} withTransactions />
-          <BlockchainForm dataRows={5} withTransactions />
-          <BlockchainForm dataRows={5} withTransactions />
+          <BlockchainForm dataRows={5} transactions={transactions} />
+          <BlockchainForm dataRows={5} />
+          <BlockchainForm dataRows={5} />
         </S.Blockchains>
       </S.Content>
     </S.Tokens>
