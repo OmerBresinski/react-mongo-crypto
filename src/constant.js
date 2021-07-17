@@ -22,11 +22,12 @@ export const COLORS = {
 export const ROUTES = {
   home: "/",
   hash: "/hash",
+  keys: "/keys",
   block: "/block",
+  tokens: "/tokens",
+  signatures: "/signatures",
   blockchain: "/blockchain",
   distributed: "/distributed",
-  keys: "/keys",
-  signatures: "/signatures",
 };
 
 export const CRYPTO = {
