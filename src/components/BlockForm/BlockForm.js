@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm, useHash } from "hooks";
+import axios from "axios";
 import TextInput from "components/TextInput";
 import Button from "components/Button";
 import * as C from "constant";
@@ -14,6 +15,7 @@ const BlockForm = ({
   isDirty,
   setIsDirty,
   transactions,
+  block,
 }) => {
   const [isValidHash, setIsValidHash] = useState(false);
   const [transactionParams, setTransactionParams] = useState({});
@@ -21,13 +23,18 @@ const BlockForm = ({
   const { hash, calculateHash, setHash } = useHash(
     `${form.block?.value}${form.nonce?.value}${
       form.data?.value
-    }${previousHash}${JSON.stringify(transactionParams)}`
+    }${previousHash}${JSON.stringify(transactionParams)}`,
+    block
   );
 
   useEffect(() => {
     onHash && onHash(hash.toString(), index);
     validateHash();
   }, [hash]);
+
+  useEffect(() => {
+    loadBlockFromServer();
+  }, [block]);
 
   useEffect(() => {
     if (previousHash) {
@@ -40,6 +47,13 @@ const BlockForm = ({
       );
     }
   }, [previousHash]);
+
+  const loadBlockFromServer = () => {
+    if (block) {
+      editEntry("data", block.data.value);
+      editEntry("nonce", block.nonce);
+    }
+  };
 
   const validateHash = () => {
     if (
@@ -74,6 +88,11 @@ const BlockForm = ({
     setIsDirty(true);
     editEntry("nonce", nonce);
     setHash(hashString);
+    axios.post("http://localhost:4000/block", {
+      nonce,
+      data: form.data,
+      hash: hashString,
+    });
   }
 
   const handleNonceChange = (e) => {
