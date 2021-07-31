@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import BlockForm from "components/BlockForm";
 import * as S from "./style";
 
-const BlockchainForm = ({ dataRows, transactions }) => {
+const BlockchainForm = ({ dataRows, transactions, coinbase }) => {
   const [isDirty, setIsDirty] = useState(false);
   const [blocks, setBlocks] = useState(initialBlocks);
 
@@ -30,6 +30,7 @@ const BlockchainForm = ({ dataRows, transactions }) => {
             isDirty={isDirty}
             setIsDirty={setIsDirty}
             transactions={transactions && transactions[index]}
+            coinbase={coinbase && coinbase}
           />
         );
       })}

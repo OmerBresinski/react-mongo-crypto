@@ -1,8 +1,9 @@
 export { default as Home } from "./Home";
 export { default as Hash } from "./Hash";
+export { default as Keys } from "./Keys";
 export { default as Block } from "./Block";
+export { default as Tokens } from "./Tokens";
+export { default as Coinbase } from "./Coinbase";
 export { default as Blockchain } from "./Blockchain";
 export { default as Distributed } from "./Distributed";
-export { default as Keys } from "./Keys";
 export { default as Signatures } from "./Signatures";
-export { default as Tokens } from "./Tokens";

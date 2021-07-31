@@ -18,6 +18,7 @@ const AppRouter = () => {
             <Route exact path={C.ROUTES.keys} component={P.Keys} />
             <Route exact path={C.ROUTES.block} component={P.Block} />
             <Route exact path={C.ROUTES.tokens} component={P.Tokens} />
+            <Route exact path={C.ROUTES.coinbase} component={P.Coinbase} />
             <Route exact path={C.ROUTES.signatures} component={P.Signatures} />
             <Route exact path={C.ROUTES.blockchain} component={P.Blockchain} />
             <Route exact path={C.ROUTES.distributed} component={P.Distributed} />

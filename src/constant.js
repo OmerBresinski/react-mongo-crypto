@@ -25,6 +25,7 @@ export const ROUTES = {
   keys: "/keys",
   block: "/block",
   tokens: "/tokens",
+  coinbase: "/coinbase",
   signatures: "/signatures",
   blockchain: "/blockchain",
   distributed: "/distributed",

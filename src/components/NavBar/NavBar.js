@@ -59,7 +59,7 @@ const TABS = [
   "Coinbase",
   "Keys",
   "Signatures",
-  "Transaction",
+  // "Transaction",
 ];
 
 export default NavBar;

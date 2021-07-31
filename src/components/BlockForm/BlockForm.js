@@ -15,15 +15,19 @@ const BlockForm = ({
   isDirty,
   setIsDirty,
   transactions,
+  coinbase,
   block,
 }) => {
   const [isValidHash, setIsValidHash] = useState(false);
+  const [coinbaseParams, setCoinbaseParams] = useState({});
   const [transactionParams, setTransactionParams] = useState({});
   const { form, handleChange, handleNumberFieldChange, editEntry } = useForm();
   const { hash, calculateHash, setHash } = useHash(
     `${form.block?.value}${form.nonce?.value}${
       form.data?.value
-    }${previousHash}${JSON.stringify(transactionParams)}`,
+    }${previousHash}${JSON.stringify(transactionParams)}${JSON.stringify(
+      coinbaseParams
+    )}`,
     block
   );
 
@@ -42,7 +46,9 @@ const BlockForm = ({
         calculateHash(
           `${form.block?.value}${form.nonce?.value}${
             form.data?.value
-          }${previousHash}${JSON.stringify(transactionParams)}`
+          }${previousHash}${JSON.stringify(transactionParams)}${JSON.stringify(
+            coinbaseParams
+          )}`
         )
       );
     }
@@ -50,8 +56,9 @@ const BlockForm = ({
 
   const loadBlockFromServer = () => {
     if (block) {
-      editEntry("data", block.data.value);
-      editEntry("nonce", block.nonce);
+      editEntry("data", block?.data?.value);
+      editEntry("nonce", block?.nonce);
+      editEntry("block", block?.number);
     }
   };
 
@@ -82,7 +89,9 @@ const BlockForm = ({
       hashString = calculateHash(
         `${form.block?.value || index + 1}${previousHash}${
           form.data?.value
-        }${nonce}${previousHash}${JSON.stringify(transactionParams)}`
+        }${nonce}${previousHash}${JSON.stringify(transactionParams)}${JSON.stringify(
+          coinbaseParams
+        )}`
       );
     }
     setIsDirty(true);
@@ -92,6 +101,7 @@ const BlockForm = ({
       nonce,
       data: form.data,
       hash: hashString,
+      number: +form.block?.value,
     });
   }
 
@@ -101,7 +111,7 @@ const BlockForm = ({
       calculateHash(
         `${form.block?.value}${value}${form.data?.value}${previousHash}${JSON.stringify(
           transactionParams
-        )}`
+        )}${JSON.stringify(coinbaseParams)}`
       )
     );
     handleChange(e);
@@ -114,7 +124,7 @@ const BlockForm = ({
       calculateHash(
         `${value}${form.nonce?.value}${form.data?.value}${previousHash}${JSON.stringify(
           transactionParams
-        )}`
+        )}${JSON.stringify(coinbaseParams)}`
       )
     );
     handleNumberFieldChange(e);
@@ -126,7 +136,7 @@ const BlockForm = ({
       calculateHash(
         `${form.block?.value}${form.nonce?.value}${value}${previousHash}${JSON.stringify(
           transactionParams
-        )}`
+        )}${JSON.stringify(coinbaseParams)}`
       )
     );
     handleChange(e);
@@ -143,7 +153,7 @@ const BlockForm = ({
         }${previousHash}${JSON.stringify({
           ...transactionParams,
           [e.fieldName]: e.value,
-        })}`
+        })}${JSON.stringify(coinbaseParams)}`
       )
     );
     handleChange(e);
@@ -160,6 +170,42 @@ const BlockForm = ({
             form.data?.value
           }${previousHash}${JSON.stringify({
             ...transactionParams,
+            [e.fieldName]: e.value,
+          })}${JSON.stringify(coinbaseParams)}`
+        )
+      );
+      handleNumberFieldChange(e);
+    }
+  };
+
+  const handleCoinbaseChange = (e) => {
+    setCoinbaseParams((params) => {
+      return { ...params, [e.fieldName]: e.value };
+    });
+    setHash(
+      calculateHash(
+        `${form.block?.value}${form.nonce?.value}${
+          form.data?.value
+        }${previousHash}${JSON.stringify(transactionParams)}${JSON.stringify({
+          ...coinbaseParams,
+          [e.fieldName]: e.value,
+        })}`
+      )
+    );
+    handleChange(e);
+  };
+
+  const handleCoinbaseAmountChange = (e) => {
+    if (!isNaN(e.value)) {
+      setCoinbaseParams((params) => {
+        return { ...params, [e.fieldName]: e.value };
+      });
+      setHash(
+        calculateHash(
+          `${form.block?.value}${form.nonce?.value}${
+            form.data?.value
+          }${previousHash}${JSON.stringify(transactionParams)}${JSON.stringify({
+            ...coinbaseParams,
             [e.fieldName]: e.value,
           })}`
         )
@@ -188,6 +234,30 @@ const BlockForm = ({
         isValid={isValidHash}
         isDirty={isDirty}
       />
+      {coinbase ? (
+        <div key={index} style={{ display: "flex", gap: "8px" }}>
+          <TextInput
+            fieldName={`amount`}
+            variant={C.VARIANT.outlined}
+            onChange={handleCoinbaseAmountChange}
+            label={"Coinbase $"}
+            value={form[`amount`]?.value ?? coinbase.amount}
+            isValid={isValidHash}
+            isDirty={isDirty}
+          />
+          <TextInput
+            fieldName={`to`}
+            variant={C.VARIANT.outlined}
+            onChange={handleCoinbaseChange}
+            label={"To"}
+            value={form[`to`]?.value ?? coinbase.to}
+            isValid={isValidHash}
+            isDirty={isDirty}
+          />
+        </div>
+      ) : (
+        <></>
+      )}
       {transactions?.length ? (
         transactions.map(({ amount, from, to }, index) => {
           return (
